@@ -18,8 +18,13 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::resource('resource','ResourceController');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('passwordform','passwordformController');
+Route::resource('password','passwordController');
+Route::resource('resource','ResourceController');
+Route::resource('productlist','ProductlistController');
+Route::resource('product','ProductController');
+Route::resource('main','MainController');
 // Route::get('/',[DisplayController::class,'index']);
 // Route::get('/',[RegistrationController::class,'index']);
 // Route::get('/',[ResourceController::class,'index']);
