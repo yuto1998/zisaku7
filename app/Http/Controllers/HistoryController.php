@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\controllers\HistoryController;
 use Illuminate\Http\Request;
-use App\Http\controllers\ProductlistController;
-class ProductlistController extends Controller
+
+class HistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class ProductlistController extends Controller
      */
     public function index()
     {
-        return view("productlist");
+        return view("history");
     }
 
     /**
@@ -21,9 +21,9 @@ class ProductlistController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-       
+        //
     }
 
     /**
@@ -34,8 +34,7 @@ class ProductlistController extends Controller
      */
     public function store(Request $request)
     {
-        //新規保存のviewを書く
-       
+        //
     }
 
     /**

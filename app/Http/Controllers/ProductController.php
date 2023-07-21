@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Http\controllers\ProductController;
+use App\Http\Requests\ProductData;
+use App\Product;
+use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     /**
@@ -13,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view("product");
+      
     }
 
     /**
@@ -23,7 +25,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view("product");
     }
 
     /**
@@ -34,12 +36,19 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // $productlist= new productlist;
-        // $productlist->name = $request->name;
-        // $productlist->amount = $request->amount;
-        // $productlist->text = $request->text;
-        // $productlist->save();
-        // return view('productlist');
+        $product= new Product;
+         // アップロードされたファイル名を取得
+         $file_name = $request->file('image')->getClientOriginalName();
+         // 取得したファイル名で保存
+         $request->file('image')->storeAs('public/images',$file_name);
+        // $record = $productlist->find($id);
+        $product->name = $request->name;
+        $product->amount = $request->amount;
+        $product->text = $request->text;
+        $product->image = $file_name;
+        $product->id = Auth::id();
+        $product->save();
+        return redirect('/');
     }
 
     /**
