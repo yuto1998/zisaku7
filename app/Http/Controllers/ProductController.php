@@ -46,7 +46,7 @@ class ProductController extends Controller
         $product->amount = $request->amount;
         $product->text = $request->text;
         $product->image = $file_name;
-        $product->id = Auth::id();
+       
         $product->save();
         return redirect('/');
     }
@@ -70,7 +70,13 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        // productlistから編集したいリストを取得
+        $product= new Product;
+        $products = $product->find($id);
+        return view('editproduct',[
+             'products'=>$products
+
+        ]);
     }
 
     /**
@@ -82,7 +88,20 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // productのidを取得しておりどのカラムを持ってくるか記述
+        $product= new Product;
+        $products = $product->find($id);
+        $expends =['name','text','amount'];
+        foreach($expends as $expend) {
+            $products->$expend = $request->$expend;
+        }
+          // アップロードされたファイル名を取得
+          $file_name = $request->file('image')->getClientOriginalName();
+          // 取得したファイル名で保存
+          $request->file('image')->storeAs('public/images',$file_name);
+          $products->image = $file_name;
+        $products->save();
+        return redirect('/'); 
     }
 
     /**
@@ -93,6 +112,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product= new Product;
+        $products = $product->find($id);
+        $products->delete();
+        return redirect('/');
     }
 }

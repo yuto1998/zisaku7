@@ -26,16 +26,16 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($users as $user)
+         
           <tr>
             <th scope='col'> 
               <a herf="">＃<a>
           </th>    
-            <th scope='col'>{{$user['name']}}</th>
-            <th scope='col'>{{$user['email']}}</th>
+            <th scope='col'>{{$users['name']}}</th>
+            <th scope='col'>{{$users['email']}}</th>
      
           </tr>
-          @endforeach  
+        
         </tbody>
       </table> 
   </div>         

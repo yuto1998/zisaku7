@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\controllers\ProductController;
-use App\Product;
-class MainController extends Controller
+use App\Http\controllers\NiceController;
+class NiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +13,7 @@ class MainController extends Controller
      */
     public function index()
     {
-        $product = new Product;
-        $products=$product->all()->toArray();
-        return view("main",[
-            'products'=>$products,
-        ]);
+        return view("nice");
     }
 
     /**

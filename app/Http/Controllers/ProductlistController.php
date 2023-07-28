@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\controllers\ProductlistController;
+use App\product;
 class ProductlistController extends Controller
 {
     /**
@@ -13,7 +14,11 @@ class ProductlistController extends Controller
      */
     public function index()
     {
-        return view("productlist");
+        $product = new Product;
+        $products=$product->all()->toArray();
+        return view("productlist",[
+            'products'=>$products,
+        ]);
     }
 
     /**

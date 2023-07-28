@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\controllers\ProductController;
-use App\Product;
-class MainController extends Controller
+use App\Http\controllers\UserlistController;
+use App\User;
+class UserlistController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,11 @@ class MainController extends Controller
      */
     public function index()
     {
-        $product = new Product;
-        $products=$product->all()->toArray();
-        return view("main",[
-            'products'=>$products,
+        $user = new User;
+        $users= $user->where('role','1')->get();
+        return view("userlist",[
+            'users' =>$users,
+            
         ]);
     }
 

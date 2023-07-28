@@ -3,22 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\controllers\ProductController;
+use App\Http\controllers\EditproductController;
+use Illuminate\Support\Facades\Auth;
 use App\Product;
-class MainController extends Controller
+class EditproductController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $product = new Product;
-        $products=$product->all()->toArray();
-        return view("main",[
-            'products'=>$products,
-        ]);
+        $product= new Product;
+
+        return view("editproduct"); 
     }
 
     /**
@@ -39,7 +38,14 @@ class MainController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product= new Product;
+        // $request= $product->find($id);
+        $expends =['name','text','amount'];
+        foreach($expends as $expend) {
+            $product->$expend = $request->$exspend;
+        }
+        Auth::product()->save($product);
+        return redirect('/'); 
     }
 
     /**

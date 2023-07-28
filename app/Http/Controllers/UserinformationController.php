@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\controllers\ProductController;
-use App\Product;
-class MainController extends Controller
+use App\Http\controllers\UserinformationController;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+class UserinformationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +15,9 @@ class MainController extends Controller
      */
     public function index()
     {
-        $product = new Product;
-        $products=$product->all()->toArray();
-        return view("main",[
-            'products'=>$products,
+        $users=User::where('id',Auth::id())->first();
+        return view("userinformation",[
+            'users' =>$users,
         ]);
     }
 
