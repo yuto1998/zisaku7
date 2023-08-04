@@ -114,7 +114,7 @@ class ProductController extends Controller
     {
         $product= new Product;
         $products = $product->find($id);
-        $products->delete();
-        return redirect('/');
+        $product->delete();
+        return redirect('productlist');
     }
 }

@@ -23,6 +23,7 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{route('userinformation.index')}}">ユーザー情報</a>
                 </li>
+               
             
             </ul>
             
@@ -51,7 +52,21 @@
             <td class="p-4 whitespace-nowrap">{{$product['amount']}}</td>
             <td class="p-4 whitespace-nowrap">
              <img class="w-12 h-9 rounded" src="{{asset('storage/images'.$product['image'])}}" />
-             <button type="submit" class="btn btn-primary">かごに入れる</button>
+          
+             <label for="category-id">{{ __('数量') }}</label>
+             <form action="{{route('cart_item',['id'=>$product['id']])}}" method="post" >
+               @csrf 
+                <select class="form-control" id="category-id" name="quantity">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+               <button type="submit" class="btn btn-primary">カート追加</button>
+              
+               
+             </form>
             </td>
           </tr>
           @endforeach

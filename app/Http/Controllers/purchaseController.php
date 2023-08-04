@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\controllers\ProductController;
-use App\Product;
-class MainController extends Controller
+use App\Http\controllers\purchaseController;
+use App\User;
+use App\Purchase;
+use App\Cart;
+use Illuminate\Support\Facades\Auth;
+class purchaseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +17,13 @@ class MainController extends Controller
      */
     public function index()
     {
-        $product = new Product;
-        $products=$product->all()->toArray();
-        return view("main",[
-            'products'=>$products,
+        $purchase= new Purchase; 
+        $auth= auth()->id(); 
+        $cart= new Cart;
+           $purchases=$cart->join('products','carts.product_id','products.id')->where('user_id',$auth)->get();
+           
+        return view('purchase',[
+            'purchases'=>$purchases,
         ]);
     }
 
@@ -37,9 +43,19 @@ class MainController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request )
     {
-        //
+        $purchase= new Purchase; 
+        $auth= auth()->id(); 
+           $purchase->quantity=  $request->quantity;
+           $purchase->user_id= $auth;
+           $purchase->product_id= $id;
+           $purchase->save();
+           $purchases=$purchase->join('products','carts.product_id','products.id')->where('user_id',$auth)->get();
+           
+        return view('purchase',[
+            'purchases'=>$purchases,
+        ]);
     }
 
     /**
@@ -61,7 +77,7 @@ class MainController extends Controller
      */
     public function edit($id)
     {
-        return view("cart");
+        //
     }
 
     /**
@@ -73,7 +89,17 @@ class MainController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $purchase= new Purchase; 
+        $auth= auth()->id(); 
+           $purchase->quantity=  $request->quantity;
+           $purchase->user_id= $auth;
+           $purchase->product_id= $id;
+           $purchase->save();
+           $purchases=$purchase->join('products','carts.product_id','products.id')->where('user_id',$auth)->get();
+           
+        return view('purchase',[
+            'purchases'=>$purchases,
+        ]);
     }
 
     /**

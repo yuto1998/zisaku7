@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\controllers\ProductController;
-use App\Product;
-class MainController extends Controller
+use\App\Pay;
+class PayController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,13 +13,14 @@ class MainController extends Controller
      */
     public function index()
     {
-        $product = new Product;
-        $products=$product->all()->toArray();
-        return view("main",[
-            'products'=>$products,
-        ]);
+        $pay= new Pay;
+        $auth= auth()->id();
+         
+        return view("pay"); 
     }
-
+     
+   
+     
     /**
      * Show the form for creating a new resource.
      *
@@ -61,7 +61,7 @@ class MainController extends Controller
      */
     public function edit($id)
     {
-        return view("cart");
+        //
     }
 
     /**

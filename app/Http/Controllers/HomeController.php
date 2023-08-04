@@ -23,9 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $role = \Auth::user()->role;
-        $id = \Auth::user()->id;
-        if($role ==0)
+        // $role = \Auth::user()->role;
+        // $id = \Auth::user()->id;
+        // if($role ==0)
         return view('home');
     }
 }

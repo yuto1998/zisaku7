@@ -45,7 +45,7 @@ class EditproductController extends Controller
             $product->$expend = $request->$exspend;
         }
         Auth::product()->save($product);
-        return redirect('/'); 
+        return redirect('home.index'); 
     }
 
     /**

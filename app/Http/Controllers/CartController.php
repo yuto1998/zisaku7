@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use App\Http\controllers\ProductController;
+use App\Cart;
+use App\User;
 use App\Product;
-class MainController extends Controller
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\controllers\CartController;
+class CartController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +16,8 @@ class MainController extends Controller
      */
     public function index()
     {
-        $product = new Product;
-        $products=$product->all()->toArray();
-        return view("main",[
-            'products'=>$products,
-        ]);
+       
+        return view('cart');
     }
 
     /**
@@ -37,9 +36,10 @@ class MainController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($id,Request $request)
     {
-        //
+        
+        
     }
 
     /**
@@ -61,7 +61,7 @@ class MainController extends Controller
      */
     public function edit($id)
     {
-        return view("cart");
+        //
     }
 
     /**
@@ -85,5 +85,21 @@ class MainController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function cart_item($id,Request $request)
+    {
+       $cart= new Cart; 
+    //    $user=auth()->user();
+       $auth= auth()->id(); 
+    //    $users=User::where('user_id',Auth::id())->first();
+       $cart->quantity=  $request->quantity;
+       $cart->user_id= $auth;
+       $cart->product_id= $id;
+       $cart->save();
+       $carts=$cart->join('products','carts.product_id','products.id')->where('user_id',$auth)->get();
+
+        return view('cart',[
+            'carts'=>$carts,
+        ]);
     }
 }
