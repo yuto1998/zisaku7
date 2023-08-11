@@ -13,24 +13,17 @@
           <tr> 
             <td class="p-4 whitespace-nowrap">{{$purchase['quantity']}}</td>
             <td class="p-4 whitespace-nowrap">{{$purchase['user_id']}}</td>
-            <td class="p-4 whitespace-nowrap">{{$purchase->name}}</td>
-           
-            <td class="p-4 whitespace-nowrap">
+            <td class="p-4 whitespace-nowrap">{{$purchase['product_id']}}</td>
           </tr>
           @endforeach
         </tbody>  
-    <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data">
-        @csrf 
-        <label for='image'>氏名</label>
-        <input type='text' class='form-control' name='name' value=""/>
-        <label for='name'>電話番号</label>
-          <input type='text' class='form-control' name='name' value=""/>
-        <label for='amount'>郵便番号</label>
-          <input type='text' class='form-control' name='amount' value=""/>              
-        <label for='text' class='mt-2'>住所</label>
-          <textarea class='form-control' name='text'></textarea>
-        <div class='row justify-content-center'>   
-            
+        <form action="{{route('purchase.store')}}" method="post" enctype="multipart/form-data">
+      @csrf 
+      @foreach($purchases as $purchase)
+      <input type='hidden' class='form-control' name='quantity' value="{{$purchase['quantity']}}"/>
+      <input type='hidden' class='form-control' name='user_id' value="{{$purchase['user_id']}}"/>
+      <input type='hidden' class='form-control' name='product_id' value="{{$purchase['product_id']}}"/>
+      @endforeach
             <button type="submit" class="btn btn-primary w-25 mt-3">購入確定</button>
             </div>
             </div>

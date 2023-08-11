@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\controllers\purchaseController;
 use App\User;
 use App\Purchase;
+use App\Product;
 use App\Cart;
 use Illuminate\Support\Facades\Auth;
 class purchaseController extends Controller
@@ -43,18 +44,23 @@ class purchaseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request )
+    public function store($id,Request $request)
     {
         $purchase= new Purchase; 
+        // $purchase=Cart::where('quantity','product_id')->where('user_id',Auth::id())->get();
+        // $users=User::where('id',Auth::id())->first();
+        
         $auth= auth()->id(); 
            $purchase->quantity=  $request->quantity;
            $purchase->user_id= $auth;
            $purchase->product_id= $id;
+        //    $purchase->product_id=  $request->product_id;
+        //    dd($request->product_id); null
            $purchase->save();
-           $purchases=$purchase->join('products','carts.product_id','products.id')->where('user_id',$auth)->get();
+        //    $purchases=$purchase->join('products','carts.product_id','products.id')->where('user_id',$auth)->get();
            
         return view('purchase',[
-            'purchases'=>$purchases,
+            'purchases'=>$purchase,
         ]);
     }
 

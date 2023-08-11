@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\controllers\ReviewController;
-class ReviewControlleer extends Controller
+use App\Http\controllers\ReviwController;
+use App\Reviw;
+class ReviewController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -12,9 +13,8 @@ class ReviewControlleer extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    //レビュー画面
     {
-        return view("review");
+        return view("reviw"); 
     }
 
     /**
@@ -35,9 +35,13 @@ class ReviewControlleer extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $reviw= new Reviw;
+        $reviw->$title = $request->title;
+        $reviw->comment = $request->comment;
+        $reviw->save();
+        return redirect('main');
     }
-
+  
     /**
      * Display the specified resource.
      *

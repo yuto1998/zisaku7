@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::post('/cart_item/{id}','CartController@cart_item')->name('cart_item');
+Route::post('/pay/{id}','PurchaseController@pay')->name('pay');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('passwordform','passwordformController');
 Route::resource('password','passwordController');
@@ -34,6 +35,7 @@ Route::resource('purchase','PurchaseController');
 Route::resource('history','HistoryController');
 Route::resource('nice','NiceController');
 Route::resource('editproduct','EditproductController');
+Route::resource('reviw','ReviwController');
 
 
 

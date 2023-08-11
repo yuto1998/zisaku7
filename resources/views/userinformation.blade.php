@@ -4,14 +4,12 @@
     <div class="col-md-5 mx-auto">
         <div class="card">
             <div class="card-header">
-                <h4 class='text-center'>ユーザーリスト</h4>
+                <h4 class='text-center'>ユーザー情報</h4>
             </div>
             <div class="card-body">
             <div class=card-body>
 <div>
   <form action="{{ route('resource.index') }}" method="GET">
-    <input type="text" name="keyword" value="">
-    <input type="submit" value="検索">
   </form>
 </div>
 <div>
@@ -29,11 +27,11 @@
          
           <tr>
             <th scope='col'> 
-              <a herf="">＃<a>
+            <a href="{{route('userinformation.edit',['user'=>$users['id']])}}" class="btn btn-primary">編集</a>
           </th>    
             <th scope='col'>{{$users['name']}}</th>
             <th scope='col'>{{$users['email']}}</th>
-     
+        
           </tr>
         
         </tbody>

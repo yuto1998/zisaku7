@@ -13,9 +13,13 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request,$id)
     {
-      
+        $product= new Product;
+        $products = $product->find($id);
+        return view('detail',[
+             'products'=>$products
+            ]);
     }
 
     /**
@@ -59,7 +63,11 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product= new Product;
+        $products = $product->find($id);
+        return view('detail',[
+             'products'=>$products
+            ]);
     }
 
     /**
@@ -113,8 +121,14 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product= new Product;
+        product::destoroy($id);
         $products = $product->find($id);
         $product->delete();
+        dd($product);
         return redirect('productlist');
+    }
+    public function detail()
+    {
+        
     }
 }

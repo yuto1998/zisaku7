@@ -23,8 +23,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{route('userinformation.index')}}">ユーザー情報</a>
                 </li>
-               
-            
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{route('reviw.index')}}">レビュー</a>
+                </li>
             </ul>
             
             </div>
@@ -46,7 +47,7 @@
           @foreach($products as $product)
           <tr> 
           <td class="p-4 whitespace-nowrap">
-              <a herf="{{route('product.store',['product' =>$product['id']])}}">詳細<a>
+          <a href="{{route('product.show',['product' =>$product['id']])}}" class="btn btn-primary">詳細<a>
             <td class="p-4 whitespace-nowrap">{{$product['name']}}</td>
             <td class="p-4 whitespace-nowrap">{{$product['text']}}</td>
             <td class="p-4 whitespace-nowrap">{{$product['amount']}}</td>
