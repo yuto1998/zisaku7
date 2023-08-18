@@ -21,10 +21,10 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-success shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a class="navbar-brand" href="{{ url('/main') }}">
+                MAISON★SATO
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -49,6 +49,25 @@
                                 </li>
                             @endif
                         @else
+                        <form method="GET" action="{{ route('main.index') }}">
+                            <input type="search" placeholder="商品をを入力" name="search" value="@if (isset($search)) {{ $search }} @endif">
+                            <div>
+                                <button type="submit">検索</button>
+                            </div>
+                        </form>
+                            <option value='' hidden>金額</option>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{route('history.index')}}">お気に入り</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{route('nice.index')}}">購入履歴</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{route('userinformation.index')}}">ユーザー情報</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{route('cart.index')}}">カート</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

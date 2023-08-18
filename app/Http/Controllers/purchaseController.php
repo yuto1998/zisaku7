@@ -44,24 +44,18 @@ class purchaseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($id,Request $request)
+    public function store(Request $request)
     {
         $purchase= new Purchase; 
-        // $purchase=Cart::where('quantity','product_id')->where('user_id',Auth::id())->get();
-        // $users=User::where('id',Auth::id())->first();
-        
         $auth= auth()->id(); 
            $purchase->quantity=  $request->quantity;
+        //    $purchase->user_id = Auth::user()->id; 
            $purchase->user_id= $auth;
-           $purchase->product_id= $id;
-        //    $purchase->product_id=  $request->product_id;
-        //    dd($request->product_id); null
+           $purchase->product_id=  $request->product_id;
            $purchase->save();
-        //    $purchases=$purchase->join('products','carts.product_id','products.id')->where('user_id',$auth)->get();
-           
-        return view('purchase',[
-            'purchases'=>$purchase,
-        ]);
+        $cart =  Cart::where('user_id',$auth)->delete(); 
+
+        return redirect ('main');
     }
 
     /**

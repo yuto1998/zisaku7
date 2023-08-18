@@ -1,20 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Http\controllers\ReviwController;
+use Illuminate\Support\Facades\Auth;
 use App\Reviw;
-class ReviewController extends Controller
+use App\Product;
+class ReviwController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        return view("reviw"); 
+        dd($id);
+        $product = new Product;
+        $products = $product->find($id);
+       
+        return view('reviw',[
+            'products'=>$products
+        ]); 
     }
 
     /**
@@ -36,12 +43,14 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $reviw= new Reviw;
-        $reviw->$title = $request->title;
+        $reviw->title = $request->title;
         $reviw->comment = $request->comment;
+        $reviw->user_id = Auth::user()->id; 
+        $reviw->product_id= $request->product_id;
         $reviw->save();
-        return redirect('main');
+        return redirect()->route('product.show',['id'=>1]);
     }
-  
+
     /**
      * Display the specified resource.
      *
@@ -50,7 +59,11 @@ class ReviewController extends Controller
      */
     public function show($id)
     {
-        //
+        $reviw= new Reviw;
+        $reviws = $reviw->find($id);
+        return view('reviw',[
+            'reviws'=>$reviws
+        ]);
     }
 
     /**
@@ -61,9 +74,14 @@ class ReviewController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = new Product;
+        $products = $product->find($id);
+        // dd($products);
+        return view('reviw',[
+            'products'=>$products
+        ]); 
     }
-
+    // <input type='hidden'を使う  value=''の中にproduct_idを入れる 
     /**
      * Update the specified resource in storage.
      *
@@ -85,5 +103,14 @@ class ReviewController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function reviwList($id){
+        dd($id);
+        $product = new Product;
+        $products = $product->find($id);
+       
+        return view('reviw',[
+            'products'=>$products
+        ]);    
     }
 }

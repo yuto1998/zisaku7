@@ -5,18 +5,20 @@
         <div class="card">
             <div class="card-header">
                 <h4 class='text-center'>レビュー</h4>
+                
             </div>
             <div class="card-body">
             <div class=card-body>
-    <form action="{{route('review.store')}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('reviw.store')}}" method="post" enctype="multipart/form-data">
         @csrf 
+        <input type='hidden' name='product_id' value='{{$products->id}}'>
         <label for='name'>タイトル</label>
           <input type='text' class='form-control' name='title' value=""/>            
         <label for='text' class='mt-2'>コメント</label>
           <textarea class='form-control' name='comment'></textarea>
         <div class='row justify-content-center'>   
-            
             <button type="submit" class="btn btn-primary w-25 mt-3">レビューする</button>
+    </form>
             </div>
             </div>
         </div>    

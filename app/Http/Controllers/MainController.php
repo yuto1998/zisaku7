@@ -12,10 +12,23 @@ class MainController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $product = new Product;
         $products=$product->all()->toArray();
+        // dd($request->search);
+        $products = Product::paginate(20);
+        $search = $request->search;
+        $query = Product::query();
+        if($search){
+            $spaceConversion = mb_convert_kana($search, 's');
+            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+            // dd($wordArraySearched);
+            foreach($wordArraySearched as $value) {
+                $query->where('name','LIKE','%'.$value.'%')->orWhere('text','LIKE','%'.$value.'%');
+        }
+        $products = $query->paginate(20);
+    }
         return view("main",[
             'products'=>$products,
         ]);
@@ -39,7 +52,24 @@ class MainController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd( $search);
+        $products = Product::paginate(20);
+        $search = $request->input('search');
+        $query = Product::query();
+        if($search){
+            $spaceConversion = mb_convert_kana($search, 's');
+            $wordArraySearched = preg_split('/[s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+            foreach($wordArraySearched as $value) {
+                $query->where('name', 'text','amount', '%'.$value.'%');
+        }
+        $products = $query->paginate(20);
+    }
+        return view('search')
+        ->with([
+            'produts' => $products,
+            'search' => $search,
+        ]);
+       
     }
 
     /**
@@ -85,5 +115,10 @@ class MainController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function search()
+    {
+        // $search =$request->input('from');
+        // if(isset($search))
     }
 }

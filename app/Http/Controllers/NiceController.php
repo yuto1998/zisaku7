@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\controllers\NiceController;
+use App\Like;
 class NiceController extends Controller
 {
     /**
@@ -11,9 +12,19 @@ class NiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view("nice");
+         // 管理者のみ
+         Gate::define('admin_only', function ($user) {
+            return ($user->role_id === 0);
+        });
+        // 一般ユーザーのみ
+        Gate::define('admin_only', function ($user) {
+            return ($user->role_id === 0);
+        });
+        // $user = Auth::user()->id;
+        // $product = $request->product_id;
+        // $like = Like::where('user_id',$user_id)->first();
     }
 
     /**
@@ -34,7 +45,7 @@ class NiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

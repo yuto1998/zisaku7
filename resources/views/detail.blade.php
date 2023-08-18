@@ -8,22 +8,31 @@
             </div>
             <div class="card-body">
             <div class=card-body>
-    <form action="{{route('reviw.index')}}" method="post" enctype="multipart/form-data">
-        @method('patch')
-        @csrf 
-        <label for='image'>画像</label>
-          <input type='file' class='form-control' name='image' value="old('image')"/>
-        <label for='name'>商品名</label>
-          <input type='text' class='form-control' name='name' value="{{old('name',$products['name'])}}"/>
-        <label for='amount'>金額</label>
-          <input type='text' class='form-control' name='amount' value="{{old('amount',$products['amount'])}}"/>              
-        <label for='text' class='mt-2'>商品説明</label>
-          <textarea class='form-control' name='text'>{{old('text',$products['text'])}}</textarea> 
-        <div class='row justify-content-center'>   
-            
-            <button type="submit" class="btn btn-primary w-25 mt-3">レビュー</button>
-            </div>
-            </div>
-        </div>    
-    </div>
-@endsection
+</div>
+<div>
+      <table class='table'>
+        <thead>
+          <tr>
+            <th></th>
+            <th scope='col'>商品名</th>
+            <th scope='col'>金額</th>
+            <th scope='col'>商品説明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+          <th scope='col'><img width="150" height="150" class="w-12 h-9 rounded" src="{{asset('storage/images/'.$products['image'])}}" /></th>
+            <th scope='col'>{{$products['name']}}</th>
+            <th scope='col'>{{$products['amount']}}</th>
+            <th scope='col'>{{$products['text']}}</th>
+          </tr>
+        </tbody>
+      </table> 
+  </div>         
+  <div class="text-center">
+     <a href="{{route('reviw.edit',['reviw' =>$products['id']])}}" class="btn btn-primary">レビューする</a>
+ </div>                 
+
+
+
+  @endsection

@@ -16,8 +16,12 @@ class CartController extends Controller
      */
     public function index()
     {
-       
-   
+        $cart= new Cart;
+        $auth= auth()->id();
+        $carts=$cart->join('products','carts.product_id','products.id')->where('user_id',$auth)->get();
+        return view('cart',[
+            'carts'=>$carts,
+        ]);
     }
 
     /**
