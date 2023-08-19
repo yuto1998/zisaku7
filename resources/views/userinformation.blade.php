@@ -26,9 +26,7 @@
         <tbody>
          
           <tr>
-            <th scope='col'> 
-            <a href="{{route('userinformation.edit',['user'=>$users['id']])}}" class="btn btn-primary">編集</a>
-          </th>    
+          <th scope='col'></th>
             <th scope='col'>{{$users['name']}}</th>
             <th scope='col'>{{$users['email']}}</th>
         

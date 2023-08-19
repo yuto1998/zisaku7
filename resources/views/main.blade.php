@@ -7,6 +7,7 @@
               <div class='p-4 text-gray-500 text-center'>商品リスト</div>
         <thead class="text-center">
           <tr>
+          <th class=""></th>
             <th class="">商品名</th>
             <th class="">商品説明</th>
             <th class="">金額</th>

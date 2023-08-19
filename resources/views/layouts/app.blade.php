@@ -67,7 +67,7 @@
                                 <a class="nav-link" href="{{route('nice.index')}}">お気に入り</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="{{route('purchase.create')}}">購入履歴</a>
+                                <a class="nav-link" href="{{route('history.index')}}">購入履歴</a>
                             </li>
                             <li class="nav-item active">
                                 <a class="nav-link" href="{{route('userinformation.index')}}">ユーザー情報</a>

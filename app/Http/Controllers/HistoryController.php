@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 use App\Http\controllers\HistoryController;
 use Illuminate\Http\Request;
-
+use App\Purchase;
+use App\Product;
+use App\User;
 class HistoryController extends Controller
 {
     /**
@@ -13,6 +15,12 @@ class HistoryController extends Controller
      */
     public function index()
     {
+        $purchase= new Purchase;
+        $auth= auth()->id(); 
+        $purchases=$purchase->join('products','purchases.product_id','products.id')->where('user_id',$auth)->get();
+        return view('history',[
+            'purchases'=>$purchases
+        ]);
         return view("history");
     }
 

@@ -48,7 +48,7 @@ class ReviwController extends Controller
         $reviw->user_id = Auth::user()->id; 
         $reviw->product_id= $request->product_id;
         $reviw->save();
-        return redirect()->route('product.show',['id'=>1]);
+        return redirect('main');
     }
 
     /**
