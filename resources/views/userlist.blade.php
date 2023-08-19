@@ -9,10 +9,7 @@
             <div class="card-body">
             <div class=card-body>
 <div>
-  <form action="{{ route('resource.index') }}" method="GET">
-    <input type="text" name="keyword" value="">
-    <input type="submit" value="検索">
-  </form>
+  
 </div>
 <div>
       <table class='table'>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\controllers\NiceController;
 use App\Like;
+use App\Product;
 class NiceController extends Controller
 {
     /**
@@ -12,19 +13,14 @@ class NiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-         // 管理者のみ
-         Gate::define('admin_only', function ($user) {
-            return ($user->role_id === 0);
-        });
-        // 一般ユーザーのみ
-        Gate::define('admin_only', function ($user) {
-            return ($user->role_id === 0);
-        });
-        // $user = Auth::user()->id;
-        // $product = $request->product_id;
-        // $like = Like::where('user_id',$user_id)->first();
+        $like= new Like;
+        $auth= auth()->id(); 
+        $likes=$like->join('products','likes.product_id','products.id')->where('user_id',$auth)->get();
+        return view('nice',[
+            'likes'=>$likes
+        ]);
     }
 
     /**
@@ -45,7 +41,34 @@ class NiceController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $id = Auth::user()->id;
+        $product_id = $request->product_id;
+        $like = new Like;
+        $product = Product::findOrFail($product_id);
+
+        // 空でない（既にいいねしている）なら
+        if ($like->like_exist($id, $product_id)) {
+            //likesテーブルのレコードを削除
+            $like = Like::where('product_id', $product_id)->where('user_id', $id)->delete();
+        } else {
+            //空（まだ「いいね」していない）ならlikesテーブルに新しいレコードを作成する
+            $like = new Like;
+            $like->product_id = $request->product_id;
+            $like->user_id = Auth::user()->id;
+            $like->save();
+        }
+
+        //loadCountとすればリレーションの数を○○_countという形で取得できる（今回の場合はいいねの総数）
+        $postLikesCount = $product->loadCount('likes')->likes_count;
+
+        //一つの変数にajaxに渡す値をまとめる
+        //今回ぐらい少ない時は別にまとめなくてもいいけど一応。笑
+        $json = [
+            'postLikesCount' => $postLikesCount,
+        ];
+        //下記の記述でajaxに引数の値を返す
+        return response()->json($json);
+    
     }
 
     /**

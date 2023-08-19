@@ -52,7 +52,7 @@ class ProductController extends Controller
         $product->image = $file_name;
        
         $product->save();
-        return redirect('/');
+        return redirect('home');
     }
 
     /**
@@ -109,7 +109,7 @@ class ProductController extends Controller
           $request->file('image')->storeAs('public/images',$file_name);
           $products->image = $file_name;
         $products->save();
-        return redirect('/'); 
+        return redirect('home'); 
     }
 
     /**
@@ -120,15 +120,16 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product= new Product;
-        product::destoroy($id);
-        $products = $product->find($id);
-        $product->delete();
-        dd($product);
+        // $product= new Product;
+        // $product->delete();
+        // product::destoroy($id);
+        // $products = $product->find($id);
+        $auth= auth()->id(); 
+        Product::where('id',$auth)->delete();
         return redirect('productlist');
     }
     public function detail()
     {
-        
+      
     }
 }

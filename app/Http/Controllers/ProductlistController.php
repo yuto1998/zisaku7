@@ -85,9 +85,20 @@ class ProductlistController extends Controller
      */
     public function destroy($id)
     {
+        dd(123);
         $product = new Product;
         $products = $product->find($id);
         $product->delete();
+        return redirect('productlist');
+    }
+    public function delete($id)
+    {
+        
+        $product = new Product;
+        $products = $product->find($id);
+        $products
+        
+        ->delete();
         return redirect('productlist');
     }
 }

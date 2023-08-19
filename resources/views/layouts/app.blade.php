@@ -23,9 +23,15 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-success shadow-sm">
             <div class="container">
+                @can('user_only')
                 <a class="navbar-brand" href="{{ url('/main') }}">
                 MAISON★SATO
                 </a>
+                @elsecan('admin_only')
+                <a class="navbar-brand" href="{{ url('/home') }}">
+                ADMIN★SATO
+                </a>
+                @endcan
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -49,6 +55,7 @@
                                 </li>
                             @endif
                         @else
+                        @can ('user_only')
                         <form method="GET" action="{{ route('main.index') }}">
                             <input type="search" placeholder="商品をを入力" name="search" value="@if (isset($search)) {{ $search }} @endif">
                             <div>
@@ -57,10 +64,10 @@
                         </form>
                             <option value='' hidden>金額</option>
                             <li class="nav-item active">
-                                <a class="nav-link" href="{{route('history.index')}}">お気に入り</a>
+                                <a class="nav-link" href="{{route('nice.index')}}">お気に入り</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="{{route('nice.index')}}">購入履歴</a>
+                                <a class="nav-link" href="{{route('purchase.create')}}">購入履歴</a>
                             </li>
                             <li class="nav-item active">
                                 <a class="nav-link" href="{{route('userinformation.index')}}">ユーザー情報</a>
@@ -85,6 +92,25 @@
                                     </form>
                                 </div>
                             </li>
+                            @elsecan('admin_only')
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                            @endcan
                         @endguest
                     </ul>
                 </div>

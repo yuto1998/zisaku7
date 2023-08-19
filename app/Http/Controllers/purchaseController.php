@@ -18,14 +18,26 @@ class purchaseController extends Controller
      */
     public function index()
     {
+        $user= new User;
         $purchase= new Purchase; 
         $auth= auth()->id(); 
-        $cart= new Cart;
-           $purchases=$cart->join('products','carts.product_id','products.id')->where('user_id',$auth)->get();
-           
-        return view('purchase',[
-            'purchases'=>$purchases,
-        ]);
+        $users=$user->select('telephone','postcode','address')->where('id',$auth)->first();
+        if($users->telephone==null){
+            
+            $cart= new Cart;
+            $purchases=$cart->join('products','carts.product_id','products.id')->where('user_id',$auth)->get();
+            
+         return view('purchase',[
+             'purchases'=>$purchases,
+         ]);
+
+        }else{
+            $cart= new Cart;
+            $purchases=$cart->join('products','carts.product_id','products.id')->where('user_id',$auth)->get();
+            return view('purchase2',[
+                'purchases'=>$purchases,
+            ]);
+        }
     }
 
     /**
@@ -35,7 +47,11 @@ class purchaseController extends Controller
      */
     public function create()
     {
-        //
+        $purchase= new Purchase; 
+        $purchases=$purchase->all()->toArray();
+        return view("history",[
+            'purchases'=>$purchases,
+        ]);
     }
 
     /**
@@ -44,10 +60,20 @@ class purchaseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $purchase= new Purchase; 
+    public function store(Request $request){
+    
         $auth= auth()->id(); 
+        if($request->name!=null){
+            $auth= auth()->id(); 
+            $user= new User;
+            $users=$user->where('id',$auth)->first();
+            $users->name= $request->name;
+            $users->telephone= $request->telephone;
+            $users->postcode= $request->postcode;
+            $users->address= $request->address;
+            $users->save();
+        }
+        $purchase= new Purchase; 
            $purchase->quantity=  $request->quantity;
         //    $purchase->user_id = Auth::user()->id; 
            $purchase->user_id= $auth;
@@ -55,7 +81,7 @@ class purchaseController extends Controller
            $purchase->save();
         $cart =  Cart::where('user_id',$auth)->delete(); 
 
-        return redirect ('main');
+        return redirect ('home');
     }
 
     /**
