@@ -21,7 +21,7 @@
              <img width="150" height="150" class="w-12 h-9 rounded" src="{{asset('storage/images/'.$product['image'])}}" />
             </td>
             <td class="p-4 whitespace-nowrap">
-            <a href="{{route('product.edit',['product'=>$product['id']])}}" class="btn btn-primary">編集</a>
+            <a href="{{route('admin.productedit',['id'=>$product['id']])}}" class="btn btn-primary">編集</a>
             <a href="{{route('delete',['id'=>$product['id']])}}" class="btn btn-primary">削除</a>
           </tr>
           @endforeach

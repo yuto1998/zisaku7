@@ -8,8 +8,8 @@
             </div>
             <div class="card-body">
             <div class=card-body>
-    <form action="{{route('product.update',['product'=>$products['id']])}}" method="post" enctype="multipart/form-data">
-        @method('patch')
+    <form action="{{route('admin.productedit',['id'=>$products['id']])}}" method="post" enctype="multipart/form-data">
+       
         @csrf 
         <label for='image'>画像</label>
           <input type='file' class='form-control' name='image' value="old('image')"/>

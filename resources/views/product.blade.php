@@ -8,7 +8,7 @@
             </div>
             <div class="card-body">
             <div class=card-body>
-    <form action="{{route('product.store')}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('admin.productinsert')}}" method="post" enctype="multipart/form-data">
         @csrf 
         <label for='image'>画像</label>
           <input type='file' class='form-control' name='image' value=""/>

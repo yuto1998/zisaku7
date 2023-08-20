@@ -27,13 +27,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/amount/{id}','MainController@amount')->name('amount');
 Route::post('ajaxlike', 'MainController@ajaxlike');
 // Route::resource('passwordform','passwordformController');
-
+Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('resource','ResourceController');
 Route::group(['middleware' => ['auth', 'can:admin_only']], function () {
     Route::get('account', 'HomeController@index')->name('account.index');
     Route::resource('productlist','ProductlistController');
     Route::resource('userlist','UserlistController');
-    Route::resource('product','ProductController');
+    Route::get('/productinsert','ProductController@create')->name('admin.productinsert');
+    Route::post('/productinsert','ProductController@store');
+    Route::get('/productedit/{id}','ProductController@edit')->name('admin.productedit');
+    Route::post('/productedit/{id}','ProductController@update');
     Route::resource('editproduct','EditproductController');
     Route::resource('main','MainController');
     Route::get('delete/{id}','ProductlistController@delete')->name('delete');
@@ -50,6 +53,7 @@ Route::group(['middleware' => ['auth', 'can:user_only']], function () {
     Route::resource('history','HistoryController');
     Route::resource('nice','NiceController');
     Route::resource('reviw','ReviwController');
+  
 });
 
 
